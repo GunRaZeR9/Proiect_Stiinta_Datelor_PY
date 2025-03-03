@@ -45,7 +45,7 @@ def monitor_performance(func):
 
 @monitor_performance
 def load_and_process_data():
-    loader = DataLoader("D:/Facultate/Haller", nrows=10000, random_state=42)
+    loader = DataLoader("D:/Projects/Proiect_Stiinta_Datelor_PY", nrows=10000, random_state=42)
     df = loader.load_csv("2019-Nov.csv")
     
     if df is not None:
@@ -78,7 +78,25 @@ def main():
         
         print("\nHourly Sales Analysis:")
         print(classifier.hourly_sales_analysis())
-        
+
+        print("\nPrice Statistics:")
+        print(classifier.calculate_price_statistics())
+
+        print("\nDetected Price Outliers:")
+        print(classifier.detect_price_outliers())
+
+        print("\nPrice Correlation Analysis:")
+        print(classifier.price_correlation_analysis())
+
+        print("\nPrice Based Clustering Results:")
+        print(classifier.price_based_clustering().head())
+
+        print("\nVisualizing Price Trends...")
+        classifier.visualize_price_trends()
+
+        print("\nComparing Price Analysis Methods:")
+        classifier.compare_price_analysis()
+
         plots = ['price_segments', 'time_patterns', 'popular_categories', 
                 'brand_engagement', 'price_distribution', 'event_types', 
                 'hourly_sales']
@@ -86,6 +104,10 @@ def main():
         for plot_type in plots:
             print(f"\nGenerating {plot_type} plot...")
             classifier.plot_results(plot_type)
+
+        #print("\n3D Graph...")
+        #classifier.visualize_price_trends_3d()
+
 
 if __name__ == "__main__":
     main()
