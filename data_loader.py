@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 from pymongo import MongoClient
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 class DataLoader:
     def __init__(self, data_path):
@@ -12,6 +13,11 @@ class DataLoader:
         file_path = self.data_path / filename
         try:
             df = pd.read_csv(file_path)
+            
+            # Convert 'Preference' to numeric values if present.
+            if "Preference" in df.columns:
+                mapping = {"Male": 0, "Female": 1, "Both": 2}
+                df["Preference_numeric"] = df["Preference"].map(mapping)
             
             print("\nData Preview (first 5 rows):")
             print(df.head())
@@ -88,3 +94,29 @@ class DataLoader:
         db = client[db_name]
         data = list(db[collection_name].find(query))
         client.close()
+        return data
+
+    def plot_data_description(self, df, numeric_columns):
+        """
+        Plots a table of the Pandas describe() output for the specified numeric columns.
+        """
+        # Compute the descriptive statistics.
+        desc = df[numeric_columns].describe().round(2)
+        
+        # Create a figure and hide axes.
+        fig, ax = plt.subplots(figsize=(10, desc.shape[0]*0.6 + 2))
+        ax.axis('tight')
+        ax.axis('off')
+        
+        # Create table.
+        table = ax.table(
+            cellText=desc.values,
+            rowLabels=desc.index,
+            colLabels=desc.columns,
+            loc='center'
+        )
+        table.auto_set_font_size(False)
+        table.set_fontsize(10)
+        fig.tight_layout()
+        plt.title("Data Description (Pandas)", pad=20)
+        plt.show()

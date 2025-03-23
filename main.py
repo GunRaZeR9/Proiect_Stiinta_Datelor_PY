@@ -28,6 +28,8 @@ def load_process_upload_and_retrieve():
     
     # Load CSV locally and process it with vectorized calls.
     df = loader.load_csv(csv_filename)
+    numeric_columns = ["latitude", "longitude", "Company Size", "Preference_numeric"]
+    loader.plot_data_description(df, numeric_columns)
     stats = loader.get_basic_stats(df)
     print("\nBasic Statistics:\n", pd.DataFrame([stats]).T)
     cleaned_df = loader.clean_data(df)

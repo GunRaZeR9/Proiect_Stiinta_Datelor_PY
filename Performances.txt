@@ -214,3 +214,9 @@ Execution time: 3.920072 seconds
 Memory usage: -67.21 MB
 CPU usage: 0.50%
 --------------------------------------------------
+
+[2025-03-23 21:36:32] Function: load_process_upload_and_retrieve
+Execution time: 108.305087 seconds
+Memory usage: 2091.92 MB
+CPU usage: -11.90%
+--------------------------------------------------
