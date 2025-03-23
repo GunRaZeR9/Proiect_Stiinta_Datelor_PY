@@ -126,14 +126,15 @@ class Classifications:
         """
         Hypothesis: There exist distinct clusters in salary distributions based on geolocation.
         This method computes an average salary from 'Salary Range', then clusters job postings
-        using 'latitude', 'longitude', and the computed average salary, and visualizes the clusters.
+        using 'latitude', 'longitude', and the computed average salary. It scales the features
+        to avoid domination by salary values, then plots the job posting locations with their
+        assigned cluster and marks the cluster centroids (in original scale).
         """
         compare_array_operations()
 
         # If 'avg_salary' doesn't exist but 'Salary Range' is present, compute it.
         if 'avg_salary' not in self.df.columns and 'Salary Range' in self.df.columns:
-            self.df['avg_salary'] = self.df['Salary Range'].str.split('-', expand=False)\
-                .apply(lambda x: np.mean(pd.to_numeric(x, errors='coerce')) if isinstance(x, list) and len(x) > 0 else None)
+            self.df['avg_salary'] = self.df['Salary Range'].apply(self.parse_salary_range)
 
         required_columns = ['latitude', 'longitude', 'avg_salary']
         missing_cols = [col for col in required_columns if col not in self.df.columns]
@@ -146,7 +147,13 @@ class Classifications:
             print("No valid data available for clustering.")
             return
 
+        # Prepare the features for clustering.
         features = data[['latitude', 'longitude', 'avg_salary']].values
+
+        # Scale the features to avoid domination by avg_salary.
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        features_scaled = scaler.fit_transform(features)
 
         try:
             from sklearn.cluster import KMeans
@@ -155,10 +162,17 @@ class Classifications:
             return
 
         kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-        clusters = kmeans.fit_predict(features)
+        clusters = kmeans.fit_predict(features_scaled)
         data['Cluster'] = clusters
 
+        # Get cluster centers in scaled space and inverse-transform to original scale.
+        centers_scaled = kmeans.cluster_centers_
+        centers_orig = scaler.inverse_transform(centers_scaled)
+        centers_lat = centers_orig[:, 0]
+        centers_lon = centers_orig[:, 1]
+
         plt.figure(figsize=(10,6))
+        # Plot the job posting locations.
         scatter = plt.scatter(data['longitude'], data['latitude'], c=data['Cluster'],
                               cmap='viridis', marker='o', s=50, alpha=0.7)
         plt.title("Salary by Geolocation Clusters")
@@ -166,4 +180,11 @@ class Classifications:
         plt.ylabel("Latitude")
         plt.colorbar(scatter, label="Cluster")
         plt.grid(True)
+
+        # Mark and annotate cluster centroids.
+        plt.scatter(centers_lon, centers_lat, c='red', marker='*', s=200, label='Centroids')
+        for idx, (lon, lat) in enumerate(zip(centers_lon, centers_lat)):
+            plt.annotate(f'Cluster {idx}', (lon, lat), textcoords="offset points", xytext=(0,10),
+                         ha='center', color='red')
+        plt.legend()
         plt.show()

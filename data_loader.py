@@ -96,27 +96,146 @@ class DataLoader:
         client.close()
         return data
 
-    def plot_data_description(self, df, numeric_columns):
+    def plot_description_performance(self, df, numeric_columns):
         """
-        Plots a table of the Pandas describe() output for the specified numeric columns.
+        Measures and plots performance (execution time and memory) for computing descriptive
+        statistics using Pandas, NumPy, and a pure Python Array approach. It also displays the
+        descriptive statistics computed by each method.
         """
-        # Compute the descriptive statistics.
-        desc = df[numeric_columns].describe().round(2)
-        
-        # Create a figure and hide axes.
-        fig, ax = plt.subplots(figsize=(10, desc.shape[0]*0.6 + 2))
-        ax.axis('tight')
-        ax.axis('off')
-        
-        # Create table.
-        table = ax.table(
-            cellText=desc.values,
-            rowLabels=desc.index,
-            colLabels=desc.columns,
+        import time
+        import tracemalloc
+
+        # ------------------
+        # Pandas measurement
+        tracemalloc.start()
+        start_time = time.time()
+        desc_pandas = df[numeric_columns].describe().round(2)
+        pandas_time = time.time() - start_time
+        pandas_mem = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        pandas_mem_usage = (pandas_mem[1] - pandas_mem[0]) / (1024 * 1024)
+        print(f"Pandas: {pandas_time:.4f} sec, {pandas_mem_usage:.4f} MB")
+
+        # ------------------
+        # NumPy measurement
+        tracemalloc.start()
+        start_time = time.time()
+        data_numpy = df[numeric_columns].to_numpy()
+        desc_numpy = {
+            "count": np.count_nonzero(~np.isnan(data_numpy), axis=0),
+            "mean": np.nanmean(data_numpy, axis=0),
+            "std": np.nanstd(data_numpy, axis=0),
+            "min": np.nanmin(data_numpy, axis=0),
+            "25%": np.nanpercentile(data_numpy, 25, axis=0),
+            "50%": np.nanpercentile(data_numpy, 50, axis=0),
+            "75%": np.nanpercentile(data_numpy, 75, axis=0),
+            "max": np.nanmax(data_numpy, axis=0),
+        }
+        numpy_time = time.time() - start_time
+        numpy_mem = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        numpy_mem_usage = (numpy_mem[1] - numpy_mem[0]) / (1024 * 1024)
+        print(f"NumPy: {numpy_time:.4f} sec, {numpy_mem_usage:.4f} MB")
+
+        # ------------------
+        # Array (pure Python list) measurement
+        data_list = df[numeric_columns].values.tolist()
+        tracemalloc.start()
+        start_time = time.time()
+        # Transform rows into columns.
+        data_list_numeric = [
+            [float(row[i]) if isinstance(row[i], (int, float)) or 
+             (isinstance(row[i], str) and row[i].replace('.', '', 1).isdigit())
+             else float("nan")
+             for row in data_list
+            ] for i in range(len(numeric_columns))
+        ]
+        desc_list = {
+            "count": [len([x for x in col if not np.isnan(x)]) for col in data_list_numeric],
+            "mean": [np.nanmean(col) for col in data_list_numeric],
+            "std": [np.nanstd(col) for col in data_list_numeric],
+            "min": [np.nanmin(col) for col in data_list_numeric],
+            "25%": [np.nanpercentile(col, 25) for col in data_list_numeric],
+            "50%": [np.nanpercentile(col, 50) for col in data_list_numeric],
+            "75%": [np.nanpercentile(col, 75) for col in data_list_numeric],
+            "max": [np.nanmax(col) for col in data_list_numeric],
+        }
+        list_time = time.time() - start_time
+        list_mem = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        list_mem_usage = (list_mem[1] - list_mem[0]) / (1024 * 1024)
+        print(f"Array: {list_time:.4f} sec, {list_mem_usage:.4f} MB")
+
+        # ------------------
+        # Create and display the performance results table.
+        results = pd.DataFrame({
+            "Metodă": ["Pandas", "NumPy", "Array"],
+            "Timp de rulare (sec)": [pandas_time, numpy_time, list_time],
+            "Memorie utilizată (MB)": [pandas_mem_usage, numpy_mem_usage, list_mem_usage]
+        })
+        print("Compararea Performanței:")
+        print(results)
+
+        fig_perf, ax_perf = plt.subplots(figsize=(8, 2))
+        ax_perf.axis('tight')
+        ax_perf.axis('off')
+        table_perf = ax_perf.table(
+            cellText=results.values,
+            colLabels=results.columns,
             loc='center'
         )
-        table.auto_set_font_size(False)
-        table.set_fontsize(10)
-        fig.tight_layout()
-        plt.title("Data Description (Pandas)", pad=20)
+        table_perf.auto_set_font_size(False)
+        table_perf.set_fontsize(10)
+        plt.title("Compararea Performanței: Pandas vs NumPy vs Array", pad=20)
+        plt.show()
+
+        # ------------------
+        # Display Descriptive Statistics for each method.
+        # For consistency, the NumPy and Array results are transformed to a DataFrame with the same format as Pandas.
+        
+        # Pandas Descriptive Statistics are already in the right format.
+        fig_pandas, ax_pandas = plt.subplots(figsize=(10, desc_pandas.shape[0]*0.6 + 2))
+        ax_pandas.axis('tight')
+        ax_pandas.axis('off')
+        table_pandas = ax_pandas.table(
+            cellText=desc_pandas.values,
+            rowLabels=desc_pandas.index,
+            colLabels=desc_pandas.columns,
+            loc='center'
+        )
+        table_pandas.auto_set_font_size(False)
+        table_pandas.set_fontsize(10)
+        plt.title("Descrierea Datelor (Pandas)", pad=20)
+        plt.show()
+
+        # NumPy Descriptive Statistics
+        desc_numpy_df = pd.DataFrame(desc_numpy, index=numeric_columns).T.round(2)
+        fig_numpy, ax_numpy = plt.subplots(figsize=(10, desc_numpy_df.shape[0]*0.6 + 2))
+        ax_numpy.axis('tight')
+        ax_numpy.axis('off')
+        table_numpy = ax_numpy.table(
+            cellText=desc_numpy_df.values,
+            rowLabels=desc_numpy_df.index,
+            colLabels=desc_numpy_df.columns,
+            loc='center'
+        )
+        table_numpy.auto_set_font_size(False)
+        table_numpy.set_fontsize(10)
+        plt.title("Descrierea Datelor (NumPy)", pad=20)
+        plt.show()
+
+        # Array Descriptive Statistics
+        desc_list_df = pd.DataFrame(desc_list, index=numeric_columns).T.round(2)
+        fig_list, ax_list = plt.subplots(figsize=(10, desc_list_df.shape[0]*0.6 + 2))
+        ax_list.axis('tight')
+        ax_list.axis('off')
+        table_list = ax_list.table(
+            cellText=desc_list_df.values,
+            rowLabels=desc_list_df.index,
+            colLabels=desc_list_df.columns,
+            loc='center'
+        )
+        table_list.auto_set_font_size(False)
+        table_list.set_fontsize(10)
+        plt.title("Descrierea Datelor (Array)", pad=20)
         plt.show()
