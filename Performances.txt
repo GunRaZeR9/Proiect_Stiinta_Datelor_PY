@@ -1,0 +1,216 @@
+
+[2025-03-23 20:18:52] Function: load_process_upload_and_retrieve
+Execution time: 88.376810 seconds
+Memory usage: 2086.93 MB
+CPU usage: 0.50%
+--------------------------------------------------
+
+[2025-03-23 20:19:32] Function: plot_event_time_trends
+Execution time: 2.725069 seconds
+Memory usage: 11.73 MB
+CPU usage: 8.40%
+--------------------------------------------------
+
+[2025-03-23 20:19:35] Function: plot_job_posting_weekday_trends
+Execution time: 3.026356 seconds
+Memory usage: 56.83 MB
+CPU usage: 12.10%
+--------------------------------------------------
+
+[2025-03-23 20:19:41] Function: plot_qualifications_skills_match
+Execution time: 5.719700 seconds
+Memory usage: 22.05 MB
+CPU usage: 0.50%
+--------------------------------------------------
+
+[2025-03-23 20:23:29] Function: load_process_upload_and_retrieve
+Execution time: 84.905332 seconds
+Memory usage: 2103.84 MB
+CPU usage: -15.50%
+--------------------------------------------------
+
+[2025-03-23 20:24:13] Function: plot_event_time_trends
+Execution time: 10.388123 seconds
+Memory usage: 16.75 MB
+CPU usage: 14.20%
+--------------------------------------------------
+
+[2025-03-23 20:24:18] Function: plot_job_posting_weekday_trends
+Execution time: 4.124875 seconds
+Memory usage: 39.73 MB
+CPU usage: 13.60%
+--------------------------------------------------
+
+[2025-03-23 20:24:22] Function: plot_qualifications_skills_match
+Execution time: 3.817873 seconds
+Memory usage: 26.20 MB
+CPU usage: 0.70%
+--------------------------------------------------
+
+[2025-03-23 20:24:22] Function: plot_avg_salary_by_country
+Execution time: 0.460995 seconds
+Memory usage: 5.53 MB
+CPU usage: 3.40%
+--------------------------------------------------
+
+[2025-03-23 20:24:23] Function: plot_avg_salary_by_experience
+Execution time: 0.450244 seconds
+Memory usage: 0.01 MB
+CPU usage: -5.60%
+--------------------------------------------------
+
+[2025-03-23 20:29:37] Function: load_process_upload_and_retrieve
+Execution time: 85.175277 seconds
+Memory usage: 2059.21 MB
+CPU usage: -21.70%
+--------------------------------------------------
+
+[2025-03-23 20:30:13] Function: cluster_salary_by_geolocation
+Execution time: 0.397121 seconds
+Memory usage: 0.04 MB
+CPU usage: -0.80%
+--------------------------------------------------
+
+[2025-03-23 20:30:16] Function: plot_event_time_trends
+Execution time: 3.296470 seconds
+Memory usage: 10.85 MB
+CPU usage: 11.40%
+--------------------------------------------------
+
+[2025-03-23 20:30:20] Function: plot_job_posting_weekday_trends
+Execution time: 2.979252 seconds
+Memory usage: 46.73 MB
+CPU usage: 8.10%
+--------------------------------------------------
+
+[2025-03-23 20:30:23] Function: plot_qualifications_skills_match
+Execution time: 3.603225 seconds
+Memory usage: 26.18 MB
+CPU usage: 1.80%
+--------------------------------------------------
+
+[2025-03-23 20:37:02] Function: load_process_upload_and_retrieve
+Execution time: 86.447515 seconds
+Memory usage: 2070.52 MB
+CPU usage: -1.90%
+--------------------------------------------------
+
+[2025-03-23 20:37:39] Function: cluster_salary_by_geolocation
+Execution time: 0.422624 seconds
+Memory usage: 0.03 MB
+CPU usage: -1.20%
+--------------------------------------------------
+
+[2025-03-23 20:37:48] Function: plot_event_time_trends
+Execution time: 8.948113 seconds
+Memory usage: 11.76 MB
+CPU usage: 9.40%
+--------------------------------------------------
+
+[2025-03-23 20:37:53] Function: plot_job_posting_weekday_trends
+Execution time: 4.387973 seconds
+Memory usage: 55.82 MB
+CPU usage: 8.10%
+--------------------------------------------------
+
+[2025-03-23 20:38:03] Function: plot_qualifications_skills_match
+Execution time: 10.354883 seconds
+Memory usage: 26.23 MB
+CPU usage: 0.00%
+--------------------------------------------------
+
+[2025-03-23 20:44:37] Function: load_process_upload_and_retrieve
+Execution time: 88.511384 seconds
+Memory usage: 2098.20 MB
+CPU usage: 7.30%
+--------------------------------------------------
+
+[2025-03-23 20:50:10] Function: load_process_upload_and_retrieve
+Execution time: 87.324662 seconds
+Memory usage: 2104.76 MB
+CPU usage: -8.00%
+--------------------------------------------------
+
+[2025-03-23 20:53:09] Function: cluster_salary_by_geolocation
+Execution time: 161.097286 seconds
+Memory usage: 122.71 MB
+CPU usage: -9.00%
+--------------------------------------------------
+
+[2025-03-23 20:53:12] Function: plot_event_time_trends
+Execution time: 2.160623 seconds
+Memory usage: 1.02 MB
+CPU usage: -0.20%
+--------------------------------------------------
+
+[2025-03-23 20:53:14] Function: plot_job_posting_weekday_trends
+Execution time: 1.972653 seconds
+Memory usage: 39.84 MB
+CPU usage: -1.20%
+--------------------------------------------------
+
+[2025-03-23 20:53:18] Function: plot_qualifications_skills_match
+Execution time: 3.745299 seconds
+Memory usage: -63.15 MB
+CPU usage: 1.30%
+--------------------------------------------------
+
+[2025-03-23 21:01:36] Function: load_process_upload_and_retrieve
+Execution time: 83.546895 seconds
+Memory usage: 2118.46 MB
+CPU usage: -10.70%
+--------------------------------------------------
+
+[2025-03-23 21:03:00] Function: cluster_salary_by_geolocation
+Execution time: 65.510268 seconds
+Memory usage: 125.52 MB
+CPU usage: 5.50%
+--------------------------------------------------
+
+[2025-03-23 21:03:16] Function: plot_event_time_trends
+Execution time: 15.851531 seconds
+Memory usage: 1.30 MB
+CPU usage: 3.00%
+--------------------------------------------------
+
+[2025-03-23 21:03:20] Function: plot_job_posting_weekday_trends
+Execution time: 2.863782 seconds
+Memory usage: 44.02 MB
+CPU usage: 3.30%
+--------------------------------------------------
+
+[2025-03-23 21:03:26] Function: plot_qualifications_skills_match
+Execution time: 5.915002 seconds
+Memory usage: -63.23 MB
+CPU usage: -2.30%
+--------------------------------------------------
+
+[2025-03-23 21:10:58] Function: load_process_upload_and_retrieve
+Execution time: 91.417336 seconds
+Memory usage: 2165.52 MB
+CPU usage: 1.90%
+--------------------------------------------------
+
+[2025-03-23 21:13:17] Function: cluster_salary_by_geolocation
+Execution time: 121.020118 seconds
+Memory usage: 124.59 MB
+CPU usage: 5.60%
+--------------------------------------------------
+
+[2025-03-23 21:13:19] Function: plot_event_time_trends
+Execution time: 2.225825 seconds
+Memory usage: 8.91 MB
+CPU usage: 0.90%
+--------------------------------------------------
+
+[2025-03-23 21:13:22] Function: plot_job_posting_weekday_trends
+Execution time: 2.263424 seconds
+Memory usage: 34.11 MB
+CPU usage: 1.20%
+--------------------------------------------------
+
+[2025-03-23 21:13:26] Function: plot_qualifications_skills_match
+Execution time: 3.920072 seconds
+Memory usage: -67.21 MB
+CPU usage: 0.50%
+--------------------------------------------------
